@@ -4,7 +4,7 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "babel src --presets @babel/preset-env --out-dir lib",
     "preinstall": "npm install --ignore-scripts && babel src --presets @babel/preset-env --out-dir lib"
   },
@@ -24,5 +24,8 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "babel-loader": "^8.0.4"
+  },
+  "dependencies": {
+    "jest": "^23.6.0"
   }
 }

@@ -66,11 +66,11 @@ export const openAfterCutoff = (hours, cutoff ) => {
 
   if (!isEmptyValue(hours) && hours.length > 0 ) {
     for (let i = 0; i < hours.length; i++) {
-      const { start_time, end_time, open } = hours[i];
+      const { startTime, endTime, open } = hours[i];
 
-      if (!isEmptyValue(start_time) && !isEmptyValue(end_time) && open === true){
-        const start = parseClockTime(start_time);
-        const end = parseClockTime(end_time);
+      if (!isEmptyValue(startTime) && !isEmptyValue(endTime) && open === true){
+        const start = parseClockTime(startTime);
+        const end = parseClockTime(endTime);
         const cutoffTime = parseClockTime(cutoff);
 
         if (end.hours < start.hours || (end.hours <= start.hours && end.minutes < start.minutes)) {

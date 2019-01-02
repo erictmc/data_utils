@@ -1,3 +1,8 @@
+
+export const deepCopy = (obj) => {
+  return JSON.parse(JSON.stringify(obj));
+};
+
 // Trims any leading zero from a string
 export const trimLeadingZeros = str => {
   return str.replace(/^0+(?!\.|$)/, "");

@@ -1,3 +1,34 @@
+import camelCase from "lodash.camelcase";
+import isObject from "lodash.isobject";
+
+
+export const convertObjToCamelCase = o => {
+  let newO, origKey, newKey, value;
+  if (o instanceof Array) {
+    return o.map(function(value) {
+      if (isObject(value)) {
+        value = convertObjToCamelCase(value);
+      }
+      return value;
+    });
+  } else {
+    newO = {};
+    for (origKey in o) {
+      if (o.hasOwnProperty(origKey)) {
+        newKey = camelCase(origKey);
+        value = o[origKey];
+        if (
+          value instanceof Array ||
+          (value !== null && value.constructor === Object)
+        ) {
+          value = convertObjToCamelCase(value);
+        }
+        newO[newKey] = value;
+      }
+    }
+  }
+  return newO;
+};
 
 export const deepCopy = (obj) => {
   return JSON.parse(JSON.stringify(obj));

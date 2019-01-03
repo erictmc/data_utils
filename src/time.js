@@ -1,4 +1,4 @@
-import { isEmptyValue, trimLeadingZeros, isStrNonNegInt } from "./index";
+import { isEmptyValue, trimLeadingZeros, isStrNonNegInt } from "./utils";
 
 export class InvalidTimeError extends Error {}
 

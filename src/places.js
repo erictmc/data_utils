@@ -8,7 +8,7 @@ import {
 } from "./constants"
 
 import { openAfterCutoff } from "./time"
-import { deepCopy } from "./index";
+import { deepCopy } from "./utils";
 
 
 const COFFEE_AND_SNACKS_LOOKUP = {

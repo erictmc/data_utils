@@ -1,5 +1,5 @@
 import { defineCategory } from "./places"
-import {COFFEE_AND_SNACKS_CATEGORY, EAT_CATEGORY, OUT_AND_ABOUT_CATEGORY, OUTDOORS_CATEGORY} from "./constants";
+import { COFFEE_AND_SNACKS_CATEGORY, EAT_CATEGORY, OUT_AND_ABOUT_CATEGORY, OUTDOORS_CATEGORY } from "./constants";
 
 const EAT_YELP_CATEGORIES = ["restaurants", "gourmet", "mexican", "french"];
 const OUTDOOR_YELP_CATEGORIES=["hiking", "parks", "dog_parks"];

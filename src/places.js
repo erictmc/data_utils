@@ -12,28 +12,28 @@ import { deepCopy } from "./index";
 
 
 const COFFEE_AND_SNACKS_LOOKUP = {
-  "coffee": true,
-  "tea": true,
-  "donuts": true,
-  "chocolate": true,
-  "icecream": true,
-  "desserts": true,
-  "bakeries": true,
+  "coffee"     : true,
+  "tea"        : true,
+  "donuts"     : true,
+  "chocolate"  : true,
+  "icecream"   : true,
+  "desserts"   : true,
+  "bakeries"   : true,
   "customcakes": true
 };
 
 const OUTDOORS_LOOKUP = {
-  "parks": true,
-  "hiking": true,
-  "dog_parks": true,
-  "beaches": true,
-  "boatcharters": true,
-  "rafting": true,
+  "parks"         : true,
+  "hiking"        : true,
+  "dog_parks"     : true,
+  "beaches"       : true,
+  "boatcharters"  : true,
+  "rafting"       : true,
   "mountainbiking": true,
-  "zipline": true,
-  "skiing": true,
-  "sailing": true,
-  "rock_climbing": true
+  "zipline"       : true,
+  "skiing"        : true,
+  "sailing"       : true,
+  "rock_climbing" : true
 };
 
 

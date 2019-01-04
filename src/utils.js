@@ -72,3 +72,31 @@ export const isEmptyValue = x => {
     isEmptyArray(x)
   );
 };
+
+
+export const passwordPassesComplexityRules = password => {
+  if (password.includes(" ")) {
+    return false;
+  }
+
+  const IS_LONG_ENOUGH = password.length > 7;
+  const HAS_LOWERCASE_LETTERS = /[a-z]/.test(password);
+  const HAS_UPPERCASE_LETTERS = /[A-Z]/.test(password);
+  const HAS_NUMBER = /[0-9]/.test(password);
+  const HAS_SPECIAL_CHARACTERS = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(
+    password
+  );
+
+  return (
+    IS_LONG_ENOUGH &&
+    HAS_LOWERCASE_LETTERS &&
+    HAS_UPPERCASE_LETTERS &&
+    HAS_NUMBER &&
+    HAS_SPECIAL_CHARACTERS
+  );
+};
+
+export const isValidEmail = email => {
+  let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return pattern.exec(email) !== null;
+};

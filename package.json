@@ -5,9 +5,9 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel src --presets @babel/preset-env --out-dir lib",
+    "build": "babel src --presets @babel/preset-env --out-dir lib --copy-files",
     "pretest": "./node_modules/.bin/eslint .",
-    "preinstall": "npm install --ignore-scripts && babel src --presets @babel/preset-env --out-dir lib"
+    "preinstall": "npm install --ignore-scripts && babel src --presets @babel/preset-env --out-dir lib --copy-files"
   },
   "repository": {
     "type": "git",

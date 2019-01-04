@@ -29,5 +29,7 @@ export {
   trimLeadingZeros,
   deepCopy,
   isEmptyArray,
-  isEmptyObject
+  isEmptyObject,
+  isValidEmail,
+  passwordPassesComplexityRules
 } from "./utils";

@@ -1,74 +1,36 @@
 import {
   EAT_CATEGORY,
   SHOP_CATEGORY,
-  NIGHTLIFE_CATEGORY,
+  DRINK_CATEGORY,
   OUT_AND_ABOUT_CATEGORY,
   COFFEE_AND_SNACKS_CATEGORY,
   OUTDOORS_CATEGORY
 } from "./constants"
 
-import { openAfterCutoff } from "./time"
-import { deepCopy } from "./utils";
+import outdoorLookup from "./category-lookups/outdoors.json"
+import coffeeAndSnacksLookup from "./category-lookups/coffee-and-snacks.json"
+import eatLookup from "./category-lookups/eat.json";
+import drinkLookup from "./category-lookups/drink.json"
+import shopLookup from "./category-lookups/shop.json"
 
-
-const COFFEE_AND_SNACKS_LOOKUP = {
-  "coffee"     : true,
-  "tea"        : true,
-  "donuts"     : true,
-  "chocolate"  : true,
-  "icecream"   : true,
-  "desserts"   : true,
-  "bakeries"   : true,
-  "customcakes": true
-};
-
-const OUTDOORS_LOOKUP = {
-  "parks"         : true,
-  "hiking"        : true,
-  "dog_parks"     : true,
-  "beaches"       : true,
-  "boatcharters"  : true,
-  "rafting"       : true,
-  "mountainbiking": true,
-  "zipline"       : true,
-  "skiing"        : true,
-  "sailing"       : true,
-  "rock_climbing" : true
-};
-
-
-export const defineCategory = ( yelpCategories, hours ) => {
+export const defineCategory = yelpCategories  => {
   let parentCategory = [];
+  let newCategory;
 
-  parentCategory = classifyOutdoors(yelpCategories, parentCategory);
+  newCategory = classifyCategory(yelpCategories, outdoorLookup, OUTDOORS_CATEGORY, true);
+  parentCategory = parentCategory.concat(newCategory);
 
-  let cats = ["food", "restaurants", "gourmet", "mexican", "french"];
-  for (let i = 0; i < cats.length; i++) {
-    if (yelpCategories.includes(cats[i])) {
-      parentCategory.push( EAT_CATEGORY );
-    }
-  }
+  newCategory = classifyCategory(yelpCategories, eatLookup, EAT_CATEGORY, false);
+  parentCategory = parentCategory.concat(newCategory);
 
-  cats =  ["shopping", "beautysvc", "homeandgarden", "fashion"];
-  for (let i = 0; i < cats.length; i++) {
-    if (yelpCategories.includes(cats[i])) {
-      parentCategory.push(SHOP_CATEGORY);
-    }
-  }
+  newCategory = classifyCategory(yelpCategories, shopLookup, SHOP_CATEGORY, false);
+  parentCategory = parentCategory.concat(newCategory);
 
-  cats = ["bars", "nightlife"];
-  for (let i = 0; i < cats.length; i++) {
-    if (yelpCategories.includes(cats[i])) {
-      if (openAfterCutoff(hours, "23:30") === true) {
-        parentCategory.push(NIGHTLIFE_CATEGORY);
-      }
-    }
-  }
+  newCategory = classifyCategory(yelpCategories, drinkLookup, DRINK_CATEGORY, false);
+  parentCategory = parentCategory.concat(newCategory);
 
-
-  parentCategory = classifyCoffeeAndSnacks(yelpCategories, parentCategory);
-
-
+  newCategory = classifyCategory(yelpCategories, coffeeAndSnacksLookup, COFFEE_AND_SNACKS_CATEGORY, true);
+  parentCategory = parentCategory.concat(newCategory);
 
   if (parentCategory.length === 0){
     return [ OUT_AND_ABOUT_CATEGORY ]
@@ -78,38 +40,29 @@ export const defineCategory = ( yelpCategories, hours ) => {
 
 };
 
+const classifyCategory = (yelpCategories, categoryLookup, categoryName, allMustBePresent) => {
+  const classifiedCategory = [];
 
-const classifyCoffeeAndSnacks = (yelpCategories, parentCategory) => {
+  if (allMustBePresent === true){
+    let allCategoriesFound = true;
+    yelpCategories.forEach(category => {
+      if (!(category in categoryLookup)){
+        allCategoriesFound = false;
+      }
+    });
 
-  const parentCategoryCpy = deepCopy(parentCategory);
-  let allCategoriesFound = true;
-  yelpCategories.forEach(category => {
-    if (!(category in COFFEE_AND_SNACKS_LOOKUP)){
-      allCategoriesFound = false;
+    if (allCategoriesFound){
+      classifiedCategory.push(categoryName)
     }
-  });
 
-  if (allCategoriesFound){
-    parentCategoryCpy.push(COFFEE_AND_SNACKS_CATEGORY)
+  } else {
+    for (let i = 0; i < yelpCategories.length; i++) {
+      if (yelpCategories[i] in categoryLookup){
+        classifiedCategory.push(categoryName);
+        break;
+      }
+    }
   }
 
-  return parentCategoryCpy
-};
-
-
-const classifyOutdoors = (yelpCategories, parentCategory) => {
-
-  const parentCategoryCpy = deepCopy(parentCategory);
-  let allCategoriesFound = true;
-  yelpCategories.forEach(category => {
-    if (!(category in OUTDOORS_LOOKUP)){
-      allCategoriesFound = false;
-    }
-  });
-
-  if (allCategoriesFound){
-    parentCategoryCpy.push(OUTDOORS_CATEGORY)
-  }
-
-  return parentCategoryCpy
+  return classifiedCategory
 };

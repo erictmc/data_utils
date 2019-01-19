@@ -1,13 +1,14 @@
 import camelCase from "lodash.camelcase";
 import isObject from "lodash.isobject";
+import snakeCase from "lodash.snakecase";
 
 
-export const convertObjToCamelCase = o => {
+const applyFuncToObjectFields = (o, func) => {
   let newO, origKey, newKey, value;
   if (o instanceof Array) {
     return o.map(function(value) {
       if (isObject(value)) {
-        value = convertObjToCamelCase(value);
+        value = applyFuncToObjectFields(value, func);
       }
       return value;
     });
@@ -15,19 +16,27 @@ export const convertObjToCamelCase = o => {
     newO = {};
     for (origKey in o) {
       if (o.hasOwnProperty(origKey)) {
-        newKey = camelCase(origKey);
+        newKey = func(origKey);
         value = o[origKey];
         if (
           value instanceof Array ||
           (value !== null && value.constructor === Object)
         ) {
-          value = convertObjToCamelCase(value);
+          value = applyFuncToObjectFields(value, func);
         }
         newO[newKey] = value;
-      }
     }
   }
-  return newO;
+}
+return newO;
+};
+
+export const convertObjToCamelCase = obj => {
+  return applyFuncToObjectFields(obj, camelCase)
+};
+
+export const convertObjToSnakeCase = obj => {
+  return applyFuncToObjectFields(obj, snakeCase)
 };
 
 export const deepCopy = (obj) => {

@@ -19,7 +19,11 @@ export {
 export {
   openAfterCutoff,
   parseClockTime,
-  InvalidTimeError
+  InvalidTimeError,
+  convertToLocalTime,
+  convertToUtcTime,
+  formatLocalTime,
+  convertToLocalMomentObj
 } from "./time";
 
 export {

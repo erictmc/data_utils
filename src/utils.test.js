@@ -1,43 +1,48 @@
 import {
   convertObjToCamelCase,
+  convertObjToSnakeCase,
   isValidEmail,
   passwordPassesComplexityRules
 } from "./utils"
 
 import camelCase from "lodash.camelcase";
 
-describe("convertObjToCamelCase", () => {
-  const inputObj = { "start_time": "foo_bar",  "end_time": "foo_bar" };
-  const outputObj = { "startTime": "foo_bar",  "endTime": "foo_bar" };
+describe("Case Conversion", () => {
+  const snake_case = { "start_time": "foo_bar",  "end_time": "foo_bar" };
+  const camelCase = { "startTime": "foo_bar",  "endTime": "foo_bar" };
 
-  it(" should handle basic objects", () => {
-    expect(convertObjToCamelCase(inputObj)).toEqual(outputObj)
+  describe("convertObjToCamelCase", () => {
+    it(" should handle basic objects", () => {
+      expect(convertObjToCamelCase(snake_case)).toEqual(camelCase)
+    });
+
+    it(" should handle arrays of objects", () => {
+      const inputArr = [snake_case, snake_case];
+      const outputArr = [camelCase, camelCase];
+      expect(convertObjToCamelCase(inputArr)).toEqual(outputArr);
+    });
+
+    it(" should handle empty arrays", () => {
+      expect(convertObjToCamelCase([])).toEqual([]);
+    })
   });
 
-  it(" should handle arrays of objects", () => {
-    const inputArr = [inputObj, inputObj];
-    const outputArr = [outputObj, outputObj];
-    expect(convertObjToCamelCase(inputArr)).toEqual(outputArr);
+  describe("convertObjToSnakeCase", () => {
+    it(" should handle basic objects", () => {
+      expect(convertObjToSnakeCase(camelCase)).toEqual(snake_case)
+    });
+
+    it(" should handle arrays of objects", () => {
+      const inputArr = [camelCase, camelCase];
+      const outputArr = [snake_case, snake_case];
+      expect(convertObjToSnakeCase(inputArr)).toEqual(outputArr);
+    });
+
+    it(" should handle empty arrays", () => {
+      expect(convertObjToSnakeCase([])).toEqual([]);
+    })
   });
 
-  it(" should handle empty arrays", () => {
-    expect(convertObjToCamelCase([])).toEqual([]);
-  })
-});
-
-describe("convertObjToCamelCase", () => {
-  const inputObj = { "start_time": "foo_bar",  "end_time": "foo_bar" };
-  const outputObj = { "startTime": "foo_bar",  "endTime": "foo_bar" };
-
-  it(" should handle basic objects", () => {
-    expect(convertObjToCamelCase(inputObj)).toEqual(outputObj)
-  });
-
-  it(" should handle basic objects", () => {
-    const inputArr = [inputObj, inputObj];
-    const outputArr = [outputObj, outputObj];
-    expect(convertObjToCamelCase(inputArr)).toEqual(outputArr);
-  })
 });
 
 describe("camelCase", () => {
@@ -47,6 +52,21 @@ describe("camelCase", () => {
     expect(camelCase("user_id")).toEqual("userId");
     expect(camelCase("place_id")).toEqual("placeId");
   });
+});
+
+describe("convertObjToCamelCase", () => {
+  const inputObj = { "start_time": "foo_bar",  "end_time": "foo_bar" };
+  const outputObj = { "startTime": "foo_bar",  "endTime": "foo_bar" };
+
+  it(" should handle basic objects", () => {
+    expect(convertObjToCamelCase(inputObj)).toEqual(outputObj)
+  });
+
+  it(" should handle basic objects", () => {
+    const inputArr = [inputObj, inputObj];
+    const outputArr = [outputObj, outputObj];
+    expect(convertObjToCamelCase(inputArr)).toEqual(outputArr);
+  })
 });
 
 describe("passwordPassesComplexityRules", () => {

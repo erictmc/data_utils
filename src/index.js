@@ -24,6 +24,7 @@ export {
 
 export {
   convertObjToCamelCase,
+  convertObjToSnakeCase,
   isEmptyValue,
   isStrNonNegInt,
   trimLeadingZeros,

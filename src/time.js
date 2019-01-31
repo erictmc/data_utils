@@ -1,6 +1,44 @@
-import { isEmptyValue, trimLeadingZeros, isStrNonNegInt } from "./utils";
+import moment from "moment-timezone";
+
+import {
+  isEmptyValue,
+  trimLeadingZeros,
+  isStrNonNegInt
+} from "./utils";
 
 export class InvalidTimeError extends Error {}
+
+
+export const convertToLocalTime = (ts, timezoneName, dateFormat = null) => {
+  if (dateFormat) {
+    return moment.tz(ts, timezoneName).format(dateFormat);
+  }
+  return moment.tz(ts, timezoneName).format();
+};
+
+export const convertToUtcTime = (ts, dateFormat) => {
+  if (dateFormat) {
+    return moment.utc(ts).format(dateFormat);
+  }
+
+  return moment.utc(ts).format();
+};
+
+// Format moment objects in local time
+export const formatLocalTime = (time, format) => {
+  const momentObj = convertToMomentObj(time);
+  return momentObj.format(format);
+}
+
+/*
+ Convert string timestamps into local time, as designated by the hour offset of the timestamp.
+  - This is done so that we can avoid calling "moment(ts)", which will convert it to local system time.
+  - This is used when timezone is not readily available.
+*/
+export const convertToLocalMomentObj = (date) => {
+  const offset = moment.parseZone(date).utcOffset();
+  return moment(date).utcOffset(offset);
+};
 
 /*
  * Takes string clock time and returns parsed hour and minute

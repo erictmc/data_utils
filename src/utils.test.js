@@ -8,8 +8,21 @@ import {
 import camelCase from "lodash.camelcase";
 
 describe("Case Conversion", () => {
-  const snake_case = { "start_time": "foo_bar",  "end_time": "foo_bar" };
-  const camelCase = { "startTime": "foo_bar",  "endTime": "foo_bar" };
+  const snake_case = {
+    "start_time": "foo",
+    "end_time": {
+      "foo_bar": undefined,
+      "bee_bop": [1, 2]
+    }
+  };
+
+  const camelCase = {
+    "startTime": "foo",
+    "endTime": {
+      "fooBar": undefined,
+      "beeBop": [1, 2]
+    }
+  };
 
   describe("convertObjToCamelCase", () => {
     it(" should handle basic objects", () => {
@@ -24,6 +37,12 @@ describe("Case Conversion", () => {
 
     it(" should handle empty arrays", () => {
       expect(convertObjToCamelCase([])).toEqual([]);
+    })
+
+    it(" should handle cases with undefined values", () => {
+      const input = { "foo_bar": undefined };
+      const output = { "fooBar": undefined };
+      expect(convertObjToCamelCase(input)).toEqual(output);
     })
   });
 
@@ -40,6 +59,16 @@ describe("Case Conversion", () => {
 
     it(" should handle empty arrays", () => {
       expect(convertObjToSnakeCase([])).toEqual([]);
+    });
+
+    it(" should handle empty arrays", () => {
+      expect(convertObjToSnakeCase([])).toEqual([]);
+    });
+
+    it(" should handle cases with undefined values", () => {
+      const input = { "fooBar": undefined };
+      const output = { "foo_bar": undefined };
+      expect(convertObjToSnakeCase(input)).toEqual(output);
     })
   });
 

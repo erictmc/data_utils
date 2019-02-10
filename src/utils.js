@@ -20,7 +20,7 @@ const applyFuncToObjectFields = (o, func) => {
         value = o[origKey];
         if (
           value instanceof Array ||
-          (value !== null && value.constructor === Object)
+          (value !== null && value !== undefined && value.constructor === Object)
         ) {
           value = applyFuncToObjectFields(value, func);
         }

@@ -118,18 +118,22 @@ describe("passwordPassesComplexityRules", () => {
       expect(passwordPassesComplexityRules("!Abcdefg")).toEqual(false);
     });
 
-    it(" lacks an upper case", () => {
-      expect(passwordPassesComplexityRules("!abcdef8")).toEqual(false);
+    it(" all lowers letters is ok", () => {
+      expect(passwordPassesComplexityRules("!abcdef8")).toEqual(true);
     });
 
-    it(" lacks lower case", () => {
-      expect(passwordPassesComplexityRules("!ABCDEF8")).toEqual(false);
+    it(" all uppercase letters is ok", () => {
+      expect(passwordPassesComplexityRules("!ABCDEF8")).toEqual(true);
     })
   });
 
   describe(" it should correctly accept cases", () => {
     it(" expected correct", () => {
       expect(passwordPassesComplexityRules("!Abcdef8")).toEqual(true);
+    })
+
+    it(" handles minimum case", () => {
+      expect(passwordPassesComplexityRules("abcdefg8")).toEqual(true);
     })
   })
 });

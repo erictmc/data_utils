@@ -89,19 +89,14 @@ export const passwordPassesComplexityRules = password => {
   }
 
   const IS_LONG_ENOUGH = password.length > 7;
-  const HAS_LOWERCASE_LETTERS = /[a-z]/.test(password);
-  const HAS_UPPERCASE_LETTERS = /[A-Z]/.test(password);
+  const HAS_LETTERS = /[A-Za-z]/.test(password);
   const HAS_NUMBER = /[0-9]/.test(password);
-  const HAS_SPECIAL_CHARACTERS = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(
-    password
-  );
 
+  // TODO/ Make sure there are no spaces
   return (
     IS_LONG_ENOUGH &&
-    HAS_LOWERCASE_LETTERS &&
-    HAS_UPPERCASE_LETTERS &&
-    HAS_NUMBER &&
-    HAS_SPECIAL_CHARACTERS
+    HAS_LETTERS &&
+    HAS_NUMBER
   );
 };
 
